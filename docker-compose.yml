@@ -1,0 +1,31 @@
+version: '3.8'
+
+volumes:
+  parking_spot_db_data: {}
+  parking_spot_pgadmin_data: {}
+
+services:
+  postgres-parking-spot:
+    container_name: postgres
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=parkingspot
+      - POSTGRES_PASSWORD=parkingspot
+      - POSTGER_DATABASE=parkingspot
+    ports:
+      - 5432:5432
+    volumes:
+      - parking_spot_db_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    volumes:
+      - parking_spot_pgadmin_data:/var/lib/pgadmin
+    ports:
+      - 5555:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@parkingspot.dev
+      PGADMIN_DEFAULT_PASSWORD: parkingspot
+
+    
